@@ -27,7 +27,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 
         try(
                 Connection connection =  super.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT categoryId, categoryName, description FROM categories");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT category_Id, name, description FROM categories");
                 ResultSet row = preparedStatement.executeQuery();
         ){
 
