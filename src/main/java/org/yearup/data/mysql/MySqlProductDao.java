@@ -24,6 +24,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         List<Product> products = new ArrayList<>();
 
 
+        //Current solution doesnt work when max price is 900(-1) and min price is > 0
         String sql = "SELECT * FROM products " +
                 "WHERE (category_id = ? OR ? = -1) " +
                 //Can get price filter to work by removing the OR statement and changing line 34 and 35 to be 0 and 900
@@ -45,8 +46,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setBigDecimal(4, maxPrice);
             statement.setBigDecimal(5, minPrice);
             statement.setBigDecimal(6, maxPrice);
-            statement.setString(5, subCategory);
-            statement.setString(6, subCategory);
+            statement.setString(7, subCategory);
+            statement.setString(8, subCategory);
 
             ResultSet row = statement.executeQuery();
 
