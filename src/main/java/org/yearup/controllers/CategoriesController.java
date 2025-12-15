@@ -1,5 +1,6 @@
 package org.yearup.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
@@ -8,6 +9,7 @@ import org.yearup.models.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +34,10 @@ public class CategoriesController
     }
 
     // add the appropriate annotation for a get action
-    public List<Category> getAll()
-    {
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Category> getAll() throws SQLException {
 
-        return null;
+        return categoryDao.getAllCategories();
     }
 
     // add the appropriate annotation for a get action
