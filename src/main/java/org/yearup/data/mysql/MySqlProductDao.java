@@ -150,10 +150,10 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
                 if (generatedKeys.next()) {
                     // Retrieve the auto-incremented ID
-                    int orderId = generatedKeys.getInt(1);
+                    int productId = generatedKeys.getInt(1);
 
                     // get the newly inserted category
-                    return getById(orderId);
+                    return getById(productId);
                 }
             }
         }
@@ -168,14 +168,14 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     public void update(int productId, Product product)
     {
         String sql = "UPDATE products" +
-                " SET name = ? " +
-                "   , price = ? " +
-                "   , category_id = ? " +
-                "   , description = ? " +
-                "   , subcategory = ? " +
-                "   , image_url = ? " +
-                "   , stock = ? " +
-                "   , featured = ? " +
+                " SET name = ?, " +
+                "    price = ?, " +
+                "    category_id = ?, " +
+                "    description = ?, " +
+                "    subcategory = ?, " +
+                "    image_url = ?, " +
+                "    stock = ?, " +
+                "    featured = ? " +
                 " WHERE product_id = ?;";
 
         try (Connection connection = getConnection())

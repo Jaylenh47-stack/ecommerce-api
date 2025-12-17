@@ -41,6 +41,7 @@ public class ShoppingCart
                                 .reduce( BigDecimal.ZERO, (lineTotal, subTotal) -> subTotal.add(lineTotal));
 
         return total;
+
     }
 
 }
