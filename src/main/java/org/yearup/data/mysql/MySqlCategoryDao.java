@@ -41,7 +41,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     }
 
     @Override
-    public Category getById(int categoryId) throws SQLException {
+    public Category getById(int categoryId)  {
         String query = """
             SELECT category_id, name, description
             FROM categories
@@ -60,6 +60,9 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 }
             }
         }
+        catch(SQLException e){
+            throw new RuntimeException(e);
+        }
 
         return null;
     }
@@ -77,7 +80,8 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0){
-                try(ResultSet generatedKeys = statement.getGeneratedKeys()){
+                try(ResultSet generatedKeys = statement.getGeneratedKeys())
+                {
                     if (generatedKeys.next()) {
                         int categoryId = generatedKeys.getInt(1);
                         return getById(categoryId);

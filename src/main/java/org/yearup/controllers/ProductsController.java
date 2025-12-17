@@ -38,7 +38,6 @@ public class ProductsController
         }
         catch(Exception ex)
         {
-            ex.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
@@ -83,7 +82,7 @@ public class ProductsController
         try
         {
             //change to update
-            productDao.create(product);
+            productDao.update(id, product);
         }
         catch(Exception ex)
         {

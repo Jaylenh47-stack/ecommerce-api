@@ -26,17 +26,28 @@ public class CategoriesController
     }
 
     @GetMapping
-    public List<Category> getAll() throws SQLException {
-        return categoryDao.getAllCategories();
+    public List<Category> getAll()  {
+        try {
+            return categoryDao.getAllCategories();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("{id}")
-    public Category getById(@PathVariable int id) throws SQLException {
+    public Category getById(@PathVariable int id)  {
+    try{
         Category category = categoryDao.getById(id);
         if (category == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return category;
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+
+
     }
 
     @GetMapping("{categoryId}/products")

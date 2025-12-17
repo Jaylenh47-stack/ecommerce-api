@@ -23,13 +23,18 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     {
         List<Product> products = new ArrayList<>();
 
+        //Used for debugging demo
+        //Remember to comment it out when you want to run the application properly
+//        String sqlDemo = "SELECT * FROM products " +
+//                "WHERE (category_id = ? OR ? = -1) " +
+//                "   AND ((price BETWEEN ? AND ?)   OR ((? = -1) AND (? = -1)" +
+//                "   AND (subcategory = ? OR ? = '')";
 
-        //Current solution doesn't work when max price is 900(-1) and min price is > 0
+        //working version
         String sql = "SELECT * FROM products " +
                 "WHERE (category_id = ? OR ? = -1) " +
-                //Can get price filter to work by removing the OR statement and changing line 34 and 35 to be 0 and 900
-                //breaks pattern, probably not best solution
-                "   AND ((price BETWEEN ? AND ? ) OR (? = -1 AND ? = -1))" +
+                "   AND (price >= ?  OR ? = -1)" +
+                "   AND (price <= ? OR ? = -1)" +
                 "   AND (subcategory = ? OR ? = '') ";
 
         categoryId = (categoryId == null) ? -1 : categoryId;
@@ -43,8 +48,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setInt(1, categoryId);
             statement.setInt(2, categoryId);
             statement.setBigDecimal(3, minPrice);
-            statement.setBigDecimal(4, maxPrice);
-            statement.setBigDecimal(5, minPrice);
+            statement.setBigDecimal(4, minPrice);
+            statement.setBigDecimal(5, maxPrice);
             statement.setBigDecimal(6, maxPrice);
             statement.setString(7, subCategory);
             statement.setString(8, subCategory);
