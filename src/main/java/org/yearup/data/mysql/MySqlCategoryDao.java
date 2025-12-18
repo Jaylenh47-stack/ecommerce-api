@@ -27,13 +27,13 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         String query = "SELECT category_id, name, description FROM categories";
 
         try(
-                Connection connection = super.getConnection();
+                Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 ResultSet row = preparedStatement.executeQuery();
         ){
             while (row.next()){
-              //  Category c = mapRow(row);
-                categories.add(mapRow(row));
+                Category c = mapRow(row);
+                categories.add(c);
             }
         }
         catch (SQLException e) {
@@ -52,7 +52,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             """;
 
         try(
-                Connection connection = super.getConnection();
+                Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query)
         ){
             preparedStatement.setInt(1, categoryId);

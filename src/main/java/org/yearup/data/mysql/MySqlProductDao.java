@@ -29,7 +29,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         //Remember to comment it out when you want to run the application properly
 //        String sqlDemo = "SELECT * FROM products " +
 //                "WHERE (category_id = ? OR ? = -1) " +
-//                "   AND ((price BETWEEN ? AND ?)   OR ((? = -1) AND (? = -1)" +
+//                "   AND ((price BETWEEN ? AND ?)) OR ((? = -1) AND (? = -1))" +
 //                "   AND (subcategory = ? OR ? = '')";
 
         //working version
@@ -45,15 +45,15 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         subCategory = (subCategory == null) ? "" : subCategory;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql) //Change to sqlDemo for demo
+             PreparedStatement statement = connection.prepareStatement(sql) //Change to sqlDemo for demo, sql for working
         )
         {
 
             statement.setInt(1, categoryId);
             statement.setInt(2, categoryId);
             statement.setBigDecimal(3, minPrice);
-            statement.setBigDecimal(4, minPrice);   //Change to max price for demo
-            statement.setBigDecimal(5, maxPrice);   //Change to min price for demo
+            statement.setBigDecimal(4, minPrice);   //Change to max price for demo, min for working
+            statement.setBigDecimal(5, maxPrice);   //Change to min price for demo, max for working
             statement.setBigDecimal(6, maxPrice);
             statement.setString(7, subCategory);
             statement.setString(8, subCategory);
