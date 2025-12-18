@@ -21,7 +21,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     }
 
     @Override
-    public List<Category> getAllCategories() throws SQLException {
+    public List<Category> getAllCategories()  {
         // get all categories
         List<Category> categories = new ArrayList<>();
         String query = "SELECT category_id, name, description FROM categories";
@@ -32,9 +32,12 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 ResultSet row = preparedStatement.executeQuery();
         ){
             while (row.next()){
-                Category c = mapRow(row);
-                categories.add(c);
+              //  Category c = mapRow(row);
+                categories.add(mapRow(row));
             }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return categories;

@@ -81,7 +81,7 @@ public class ProductsController
     {
         try
         {
-            //change to update
+            //changed to update from create
             productDao.update(id, product);
         }
         catch(Exception ex)

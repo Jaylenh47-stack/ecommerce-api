@@ -27,12 +27,7 @@ public class CategoriesController
 
     @GetMapping
     public List<Category> getAll()  {
-        try {
-            return categoryDao.getAllCategories();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return categoryDao.getAllCategories();
     }
 
     @GetMapping("{id}")
