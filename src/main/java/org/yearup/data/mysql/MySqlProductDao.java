@@ -23,6 +23,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     @Override
     public List<Product> search(Integer categoryId, BigDecimal minPrice, BigDecimal maxPrice, String subCategory)
     {
+
         List<Product> products = new ArrayList<>();
 
         //Used for debugging demo
@@ -52,8 +53,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setInt(1, categoryId);
             statement.setInt(2, categoryId);
             statement.setBigDecimal(3, minPrice);
-            statement.setBigDecimal(4, minPrice);   //Change to max price for demo, min for working
-            statement.setBigDecimal(5, maxPrice);   //Change to min price for demo, max for working
+            statement.setBigDecimal(4, minPrice);   //Change to maxPrice for demo, min for working
+            statement.setBigDecimal(5, maxPrice);   //Change to minPrice for demo, max for working
             statement.setBigDecimal(6, maxPrice);
             statement.setString(7, subCategory);
             statement.setString(8, subCategory);

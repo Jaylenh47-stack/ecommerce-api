@@ -45,7 +45,7 @@ public class ShoppingCartController
     {
         try
         {
-            // get the currently logged in username
+            // get the currently logged-in username
             String userName = principal.getName();
             // find database user by userId
             User user = userDao.getByUserName(userName);
@@ -67,10 +67,11 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
 @PostMapping("/products/{productId}")
     public ShoppingCart addProduct(Principal principal, @PathVariable int product_id){
-
+    //Todo finish fixing logic
     String userName = principal.getName();
     User user = userDao.getByUserName(userName);
-    return shoppingCartDao.addProduct(user.getId(), product_id);
+     shoppingCartDao.addProduct(user.getId(), product_id);
+     return shoppingCartDao.getByUserId(user.getId());
 }
 
 

@@ -67,7 +67,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public ShoppingCart addProduct(int userId, int productId) {
+    public void addProduct(int userId, int productId) {
 
         String sql = "INSERT INTO shopping_cart(user_id, product_id, quantity) VALUES(?, ?, 1)";
 
@@ -80,7 +80,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
 
             preparedStatement.executeUpdate();
 
-            return getByUserId(userId);
+
 
 
         }
