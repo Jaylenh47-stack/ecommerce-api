@@ -3,18 +3,17 @@ package org.yearup.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProductDao;
 import org.yearup.data.ShoppingCartDao;
 import org.yearup.data.UserDao;
+import org.yearup.data.mysql.MySqlShoppingCartDao;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.User;
 
 import java.security.Principal;
+import java.sql.SQLException;
 
 // convert this class to a REST controller
 
@@ -59,17 +58,20 @@ public class ShoppingCartController
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Problem with shopping cart controller.");
         }
     }
 
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
+@PostMapping("/products/{productId}")
+    public ShoppingCart addProduct(Principal principal, @PathVariable int product_id){
 
-    public ShoppingCart addProduct(Principal principal){
-        return null;
-    }
+    String userName = principal.getName();
+    User user = userDao.getByUserName(userName);
+    return shoppingCartDao.addProduct(user.getId(), product_id);
+}
 
 
     // add a PUT method to update an existing product in the cart - the url should be

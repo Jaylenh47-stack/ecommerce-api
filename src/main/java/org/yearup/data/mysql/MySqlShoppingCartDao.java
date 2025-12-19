@@ -47,7 +47,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
                     //Gets the product with the matching product id
                     Product product = productDao.getById(productId);
 
-                    //Turn product into a shoppingCartItem
+                    //Turn product into a shoppingCartItem so that it can be added to cart
                     ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
                     shoppingCartItem.setProduct(product);
                     shoppingCartItem.setQuantity(quantity);
@@ -63,13 +63,30 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             throw new RuntimeException(e);
         }
 
-        
+
     }
 
     @Override
-    public void addProduct(Product product) {
+    public ShoppingCart addProduct(int userId, int productId) {
+
+        String sql = "INSERT INTO shopping_cart(user_id, product_id, quantity) VALUES(?, ?, 1)";
+
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        )
+        {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, productId);
+
+            preparedStatement.executeUpdate();
+
+            return getByUserId(userId);
 
 
+        }
+        catch(SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
