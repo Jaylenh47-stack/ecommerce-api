@@ -51,7 +51,7 @@ public class ShoppingCartController
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
 
-            System.out.println(userId);
+
 
             // use the shoppingcartDao to get all items in the cart and return the cart
             return shoppingCartDao.getByUserId(userId);
@@ -65,22 +65,40 @@ public class ShoppingCartController
 
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
-@PostMapping("/products/{productId}")
-    public ShoppingCart addProduct(Principal principal, @PathVariable int product_id){
-    //Todo finish fixing logic
+    @PostMapping("/products/{product_id}")
+    public ShoppingCart addProduct(@PathVariable int product_id, Principal principal){
+
     String userName = principal.getName();
     User user = userDao.getByUserName(userName);
-     shoppingCartDao.addProduct(user.getId(), product_id);
-     return shoppingCartDao.getByUserId(user.getId());
+
+    if (shoppingCartDao.getByUserId(user.getId()).contains(product_id)){
+        return updateCart(product_id, principal);
+        }
+
+    return shoppingCartDao.addProduct(user.getId(), product_id);
+     //return shoppingCartDao.getByUserId(user.getId());
 }
 
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated
+    //TODO finish update
+    @PutMapping("/products/{product_id}")
+    public ShoppingCart updateCart(@PathVariable int product_id, Principal principal){
+        String userName = principal.getName();
+        User user = userDao.getByUserName(userName);
 
+        return shoppingCartDao.update(product_id, user.getId());
+    }
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart
+    @DeleteMapping()
+    public ShoppingCart deleteCart(Principal principal){
+        String userName = principal.getName();
+        User user = userDao.getByUserName(userName);
 
+        return shoppingCartDao.delete(user.getId());
+    }
 }
